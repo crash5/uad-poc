@@ -32,7 +32,7 @@ jobs:
       run: |
         chmod +x ./tools/mo
         mkdir output
-        bash ./tools/create_website.sh "${{VERSION}}" "${{DOWNLOAD_URL}}" ./web
+        bash ./tools/create_website.sh "${VERSION}" "${DOWNLOAD_URL}" ./web
 
     - name: Upload website artifact
       uses: actions/upload-pages-artifact@v3
