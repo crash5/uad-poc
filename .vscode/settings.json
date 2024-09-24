@@ -1,6 +1,0 @@
-{
-    "[jsonc]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "vscode.json-language-features"
-    }
-}
