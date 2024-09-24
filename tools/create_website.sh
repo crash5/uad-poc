@@ -14,3 +14,4 @@ tools/mo templates/version.txt.mustache > "${OUTPUT_PATH}"/version.txt
 tools/mo templates/version_with_url.txt.mustache > "${OUTPUT_PATH}"/version_with_url.txt
 tools/mo templates/version.json.mustache > "${OUTPUT_PATH}"/version.json
 tools/mo templates/index.html.mustache > "${OUTPUT_PATH}"/index.html
+python tools/uad-html-table.py > "${OUTPUT_PATH}"/uad.html
