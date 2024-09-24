@@ -29,7 +29,7 @@ jobs:
         echo "VERSION=${COMMIT_DATE}" >> $GITHUB_ENV
 
         export URL="https://github.com/crash5/uad-poc/releases/download/{{VERSION}}/uad_lists.json"
-        echo "URL=${DOWNLOAD_URL}" >> $GITHUB_ENV
+        echo "DOWNLOAD_URL=${URL}" >> $GITHUB_ENV
 
     - name: Create website files
       run: |
