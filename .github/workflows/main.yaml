@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - "main"
+    # paths:
+    #   - 'list/*'
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup environment variables
+      run: |
+        export COMMIT_DATE=$(git log -1 --pretty=format:%ad --date=format:%Y%m%d%H%M)
+        echo "VERSION=${COMMIT_DATE}" >> $GITHUB_ENV
+
+        export URL="https://github.com/crash5/uad-poc/releases/download/{{VERSION}}/uad_lists.json"
+        echo "URL=${DOWNLOAD_URL}" >> $GITHUB_ENV
+
+    - name: Create website files
+      run: |
+        chmod +x ./tools/mo
+        mkdir output
+        bash ./tools/create_website.sh "${{VERSION}}" "${{DOWNLOAD_URL}}" ./web
+
+    - name: Upload website artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: web/
+
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ./list/*
+
+
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
