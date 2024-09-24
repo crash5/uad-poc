@@ -31,7 +31,7 @@ jobs:
     - name: Create website files
       run: |
         chmod +x ./tools/mo
-        mkdir output
+        mkdir web
         bash ./tools/create_website.sh "${VERSION}" "${DOWNLOAD_URL}" ./web
 
     - name: Upload website artifact
